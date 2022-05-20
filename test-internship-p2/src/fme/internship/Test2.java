@@ -26,6 +26,13 @@
 
 package fme.internship;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * 
  * @author <full name>
@@ -33,7 +40,36 @@ package fme.internship;
  * 
  */
 public class Test2 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("FME Internship - Test2");
+
+        String line;
+        FileReader fileReader = new FileReader("test-internship-p2/src/test.in");
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        HashMap<String, Integer> map = new LinkedHashMap<>();
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] textLine = line.split(" ");
+            for(String word : textLine) {
+                if(!word.isEmpty()){
+                    if(map.containsKey(word)) {
+                        map.put(word, map.get(word) + 1);
+                    } else {
+                        map.put(word, 1);
+                    }
+                }
+            }
+        }
+        int count = 0;
+        int value = 0;
+        for(Map.Entry<String, Integer> pair : map.entrySet()){
+            if(count == 2){
+                value = pair.getValue();
+            }
+            if(pair.getValue() == value){
+                System.out.println(pair.getKey());
+            }
+            count++;
+        }
     }
 }
